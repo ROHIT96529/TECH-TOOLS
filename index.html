@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tech Tools — Enhanced Glass UI</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+* {margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body {
+    background: linear-gradient(135deg,#3a0ca3,#7209b7,#f72585);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    color:#fff;
+}
+nav {
+    width:100%;
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(12px);
+    padding:20px;
+    position:sticky;
+    top:0;
+    border-bottom:1px solid rgba(255,255,255,0.2);
+    font-size:1.2em;
+    font-weight:600;
+}
+nav a {text-decoration:none;cursor:pointer;transition:0.3s;}
+nav a:hover {color:#f7c59f;text-shadow:0 0 10px #fff;}
+section {
+    display:none;
+    text-align:center;
+    margin-top:40px;
+    padding:30px;
+    width:90%;
+    max-width:650px;
+    background: rgba(255,255,255,0.15);
+    border-radius:25px;
+    box-shadow:0 8px 40px rgba(0,0,0,0.3);
+    backdrop-filter: blur(20px);
+}
+section.active {display:block;}
+h1 {margin-bottom:20px; font-size:2.2em; text-shadow:0 0 15px #fff;}
+p {font-size:1.2em; line-height:1.6; margin-bottom:20px; text-shadow:0 0 5px #fff;}
+button {
+    background: rgba(255,255,255,0.15);
+    border:none;
+    padding:15px 25px;
+    border-radius:12px;
+    color:white;
+    cursor:pointer;
+    margin:5px;
+    font-size:1.1em;
+    transition:0.3s;
+    box-shadow:0 0 8px rgba(255,255,255,0.5);
+}
+button:hover {background: rgba(255,255,255,0.35); box-shadow:0 0 15px #fff;}
+input {
+    padding:15px;
+    margin:5px;
+    border-radius:12px;
+    border:none;
+    width:100%;
+    text-align:right;
+    font-size:2em;
+    box-shadow:0 0 8px rgba(255,255,255,0.5);
+}
+.time {font-size:2.5em; margin:15px 0; text-shadow:0 0 15px #fff;}
+.laps {margin-top:15px; text-align:left; max-height:150px; overflow-y:auto; border-top:1px solid rgba(255,255,255,0.3); padding-top:10px;}
+footer {margin-top:50px;font-size:0.9em;opacity:0.8;text-align:center;}
+select {
+    padding:10px;
+    margin:5px;
+    border-radius:10px;
+    border:none;
+    font-size:1em;
+    width:100%;
+    max-width:300px;
+}
+</style>
+</head>
+<body>
+
+<nav>
+    <a onclick="show('home')">🏠 Home</a>
+    <a onclick="show('stopwatch')">⏱ Stopwatch</a>
+    <a onclick="show('worldclock')">🌍 World Time</a>
+    <a onclick="show('calculator')">🧮 Calculator</a>
+</nav>
+
+<section id="home" class="active">
+    <h1>Welcome to Tech Tools</h1>
+    <p>This web application is your ultimate tech companion. It includes a futuristic <b>stopwatch</b> for precise timing with milliseconds and lap functionality, a <b>world clock</b> showing live time across countries and allowing you to check custom countries instantly, and a powerful <b>calculator</b> with keyboard support and memory functions.<br><br>
+    All sections are designed with a modern glass/frosted style, glowing text, and smooth gradient backgrounds to provide a futuristic, tech-savvy experience. Ideal for productivity, learning, or just having fun exploring tech tools in one place. 💻✨</p>
+</section>
+
+<section id="stopwatch">
+    <h1>Stopwatch</h1>
+    <div class="time" id="display">00:00:000</div>
+    <button onclick="startStopwatch()">Start</button>
+    <button onclick="stopStopwatch()">Stop</button>
+    <button onclick="resetStopwatch()">Reset</button>
+    <button onclick="lapStopwatch()">Lap</button>
+    <div class="laps" id="laps"></div>
+</section>
+
+<section id="worldclock">
+    <h1>World Time</h1>
+    <div>
+        <select id="custom-country">
+            <option value="">Select a Country</option>
+            <option value="Asia/Kolkata">India</option>
+            <option value="America/New_York">USA (New York)</option>
+            <option value="Europe/London">UK (London)</option>
+            <option value="Asia/Tokyo">Japan</option>
+            <option value="Australia/Sydney">Australia</option>
+            <option value="Asia/Dubai">UAE</option>
+            <option value="Europe/Paris">France</option>
+            <option value="Europe/Berlin">Germany</option>
+            <option value="America/Los_Angeles">USA (LA)</option>
+        </select>
+    </div>
+    <div id="times"></div>
+    <div id="custom-time" style="margin-top:15px;font-size:1.2em;text-shadow:0 0 8px #fff;"></div>
+</section>
+
+<section id="calculator">
+    <h1>Calculator</h1>
+    <input type="text" id="calc-display" readonly><br>
+    <div>
+        <button onclick="addToCalc('7')">7</button>
+        <button onclick="addToCalc('8')">8</button>
+        <button onclick="addToCalc('9')">9</button>
+        <button onclick="addToCalc('/')">÷</button><br>
+        <button onclick="addToCalc('4')">4</button>
+        <button onclick="addToCalc('5')">5</button>
+        <button onclick="addToCalc('6')">6</button>
+        <button onclick="addToCalc('*')">×</button><br>
+        <button onclick="addToCalc('1')">1</button>
+        <button onclick="addToCalc('2')">2</button>
+        <button onclick="addToCalc('3')">3</button>
+        <button onclick="addToCalc('-')">−</button><br>
+        <button onclick="addToCalc('0')">0</button>
+        <button onclick="addToCalc('.')">.</button>
+        <button onclick="calculate()">=</button>
+        <button onclick="addToCalc('+')">+</button><br>
+        <button onclick="clearCalc()">C</button>
+        <button onclick="memorySave()">MS</button>
+        <button onclick="memoryRecall()">MR</button>
+        <button onclick="memoryClear()">MC</button>
+    </div>
+</section>
+
+<footer>
+    © 2025 Tech Tools | Built with ❤️ by Tanzeem
+</footer>
+
+<script>
+    // Navigation
+    function show(id){
+        document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    // Stopwatch
+    let stopwatchInterval, elapsedTime=0;
+    function startStopwatch(){
+        if(!stopwatchInterval){
+            const startTime=Date.now()-elapsedTime;
+            stopwatchInterval=setInterval(()=>{
+                elapsedTime=Date.now()-startTime;
+                const totalSeconds=Math.floor(elapsedTime/1000);
+                const mins=String(Math.floor(totalSeconds/60)).padStart(2,'0');
+                const secs=String(totalSeconds%60).padStart(2,'0');
+                const millis=String(elapsedTime%1000).padStart(3,'0');
+                document.getElementById('display').innerText=`${mins}:${secs}:${millis}`;
+            },10);
+        }
+    }
+    function stopStopwatch(){clearInterval(stopwatchInterval); stopwatchInterval=null;}
+    function resetStopwatch(){stopStopwatch(); elapsedTime=0; document.getElementById('display').innerText="00:00:000"; document.getElementById('laps').innerHTML='';}
+    function lapStopwatch(){
+        const lapTime=document.getElementById('display').innerText;
+        const lapsDiv=document.getElementById('laps');
+        const lapElem=document.createElement('p'); lapElem.innerText=lapTime;
+        lapsDiv.prepend(lapElem);
+    }
+
+    // World Clock
+    const countries={"India":"Asia/Kolkata","USA (New York)":"America/New_York","UK (London)":"Europe/London","Japan":"Asia/Tokyo","Australia":"Australia/Sydney","UAE":"Asia/Dubai"};
+    function updateWorldTime(){
+        const timesDiv=document.getElementById("times"); timesDiv.innerHTML="";
+        for(let [country,zone] of Object.entries(countries)){
+            const time=new Date().toLocaleTimeString("en-US",{timeZone:zone});
+            timesDiv.innerHTML+=`<p><b>${country}</b>: ${time}</p>`;
+        }
+        const selected=document.getElementById('custom-country').value;
+        if(selected){
+            const customTime=new Date().toLocaleTimeString("en-US",{timeZone:selected});
+            document.getElementById('custom-time').innerText=`Custom Country (${selected}): ${customTime}`;
+        } else {
+            document.getElementById('custom-time').innerText="";
+        }
+    }
+    document.getElementById('custom-country').addEventListener('change', updateWorldTime);
+    setInterval(updateWorldTime,1000); updateWorldTime();
+
+    // Calculator
+    let memory=0;
+    function addToCalc(value){document.getElementById("calc-display").value+=value;}
+    function clearCalc(){document.getElementById("calc-display").value="";}
+    function calculate(){
+        try{document.getElementById("calc-display").value=eval(document.getElementById("calc-display").value);}
+        catch{document.getElementById("calc-display").value="Error";}
+    }
+    function memorySave(){memory=eval(document.getElementById("calc-display").value);}
+    function memoryRecall(){document.getElementById("calc-display").value=memory;}
+    function memoryClear(){memory=0;}
+
+    // Keyboard support for calculator
+    document.addEventListener('keydown', (e)=>{
+        const keys="0123456789+-*/.";
+        if(keys.includes(e.key)){addToCalc(e.key);}
+        if(e.key==="Enter"){calculate();}
+        if(e.key==="Backspace"){document.getElementById("calc-display").value=document.getElementById("calc-display").value.slice(0,-1);}
+        if(e.key.toLowerCase()==="c"){clearCalc();}
+    });
+</script>
+</body>
+</html>
